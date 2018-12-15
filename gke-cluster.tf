@@ -62,6 +62,14 @@ output "master_admin_password" {
   value = "${google_container_cluster.gke-cluster.master_auth.0.password}"
 }
 
+output "master_admin_username" {
+  value = "${google_container_cluster.gke-cluster.master_auth.0.username}"
+}
+
+output "master public ip" {
+  value = "${google_container_cluster.gke-cluster.endpoint}"
+}
+
 variable "k8s-version" {
   default = "1.11.5-gke.4"
 }

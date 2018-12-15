@@ -17,7 +17,7 @@ resource "google_container_node_pool" "k8s-node-pool" {
   }
 
   node_config {
-    machine_type = "n1-standard-4"
+    machine_type = "n1-standard-2"
     disk_size_gb = 50
     disk_type    = "pd-standard"
     preemptible  = true
@@ -33,13 +33,5 @@ resource "google_container_node_pool" "k8s-node-pool" {
     labels {
       dedicated = "k8s"
     }
-
-    taint = [
-      {
-        key    = "dedicated"
-        value  = "k8s"
-        effect = "NO_SCHEDULE"
-      },
-    ]
   }
 }
