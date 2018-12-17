@@ -19,8 +19,8 @@ resource "google_container_cluster" "gke-cluster" {
     }
 
     management {
-      auto_repair  = true
-      auto_upgrade = true
+      auto_repair  = false
+      auto_upgrade = false
     }
 
     node_config {
@@ -80,15 +80,18 @@ resource "google_container_cluster" "gke-cluster" {
 
 # The following outputs allow authentication and connectivity to the GKE Cluster.
 output "client_certificate" {
-  value = "${google_container_cluster.gke-cluster.master_auth.0.client_certificate}"
+  value     = "${google_container_cluster.gke-cluster.master_auth.0.client_certificate}"
+  sensitive = true
 }
 
 output "client_key" {
-  value = "${google_container_cluster.gke-cluster.master_auth.0.client_key}"
+  value     = "${google_container_cluster.gke-cluster.master_auth.0.client_key}"
+  sensitive = true
 }
 
 output "cluster_ca_certificate" {
-  value = "${google_container_cluster.gke-cluster.master_auth.0.cluster_ca_certificate}"
+  value     = "${google_container_cluster.gke-cluster.master_auth.0.cluster_ca_certificate}"
+  sensitive = true
 }
 
 output "master_admin_password" {
@@ -99,14 +102,6 @@ output "master_admin_username" {
   value = "${google_container_cluster.gke-cluster.master_auth.0.username}"
 }
 
-output "master public ip" {
+output "host" {
   value = "${google_container_cluster.gke-cluster.endpoint}"
-}
-
-variable "k8s-version" {
-  default = "1.11.5-gke.4"
-}
-
-variable "external-white-cidr" {
-  default = "1.2.3.4/32"
 }

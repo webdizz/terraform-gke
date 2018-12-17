@@ -1,19 +1,8 @@
 provider "google-beta" {
-  credentials = "${file("./creds/terraform-sa.json")}"
+  version     = "~> 1.20"
+  credentials = "${file("${path.module}/terraform-sa.json")}"
   project     = "cicd-gke-jenkins-x"
   region      = "${var.region}"
-}
-
-variable "region" {
-  default = "europe-west4"
-}
-
-variable "zone" {
-  default = "europe-west4-a"
-}
-
-variable "network_name" {
-  default = "gke-k8s-cicd-net"
 }
 
 resource "google_compute_network" "default" {
