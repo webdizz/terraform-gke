@@ -9,11 +9,40 @@ resource "google_container_cluster" "gke-cluster" {
   min_master_version = "${var.k8s-version}"
   node_version       = "${var.k8s-version}"
 
-  remove_default_node_pool = true
-
   node_pool {
     name               = "default-pool"
-    initial_node_count = 0
+    initial_node_count = 1
+
+    autoscaling {
+      min_node_count = 2
+      max_node_count = 5
+    }
+
+    management {
+      auto_repair  = true
+      auto_upgrade = true
+    }
+
+    node_config {
+      machine_type = "n1-standard-2"
+      disk_size_gb = 20
+      disk_type    = "pd-standard"
+      preemptible  = true
+      image_type   = "COS"
+
+      oauth_scopes = [
+        "compute-rw",
+        "storage-ro",
+        "logging-write",
+        "monitoring",
+      ]
+
+      labels {
+        dedicated = "k8s"
+        region    = "${var.region}"
+        role      = "system"
+      }
+    }
   }
 
   private_cluster_config {
@@ -40,9 +69,13 @@ resource "google_container_cluster" "gke-cluster" {
     cluster_ipv4_cidr_block = "/16"
   }
 
-  # master_authorized_networks_config{
-  #   cidr_blocks=""
-  # }
+  master_authorized_networks_config {
+    cidr_blocks = [
+      {
+        cidr_block = "${var.external-white-cidr}"
+      },
+    ]
+  }
 }
 
 # The following outputs allow authentication and connectivity to the GKE Cluster.
@@ -72,4 +105,8 @@ output "master public ip" {
 
 variable "k8s-version" {
   default = "1.11.5-gke.4"
+}
+
+variable "external-white-cidr" {
+  default = "1.2.3.4/32"
 }
