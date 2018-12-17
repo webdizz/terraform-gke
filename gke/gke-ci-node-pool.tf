@@ -1,15 +1,13 @@
 resource "google_container_node_pool" "ci-mid-node-pool" {
-  provider = "google-beta"
-  name     = "ci-mid-node-pool"
-  zone     = "${var.region}-a"
-
-  cluster = "${google_container_cluster.gke-cluster.name}"
-
-  initial_node_count = 1
+  provider           = "google-beta"
+  name               = "ci-mid-node-pool"
+  zone               = "${var.region}-a"
+  cluster            = "${google_container_cluster.gke-cluster.name}"
+  initial_node_count = "${var.ci-mid-max-nodes}"
 
   autoscaling {
     min_node_count = 0
-    max_node_count = 5
+    max_node_count = "${var.ci-mid-max-nodes}"
   }
 
   management {
@@ -20,7 +18,7 @@ resource "google_container_node_pool" "ci-mid-node-pool" {
   node_config {
     image_type   = "COS"
     machine_type = "n1-highcpu-8"
-    disk_size_gb = 100
+    disk_size_gb = 50
     disk_type    = "pd-ssd"
     preemptible  = true
 

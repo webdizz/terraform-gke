@@ -11,11 +11,11 @@ resource "google_container_cluster" "gke-cluster" {
 
   node_pool {
     name               = "default-pool"
-    initial_node_count = 1
+    initial_node_count = "${var.k8s-max-nodes}"
 
     autoscaling {
-      min_node_count = 2
-      max_node_count = 5
+      min_node_count = 0
+      max_node_count = "${var.k8s-max-nodes}"
     }
 
     management {

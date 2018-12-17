@@ -17,3 +17,11 @@ variable "k8s-version" {
 variable "external-white-cidr" {
   default = "1.2.3.4/32"
 }
+
+variable "k8s-max-nodes" {
+  default = 2
+}
+
+variable "ci-mid-max-nodes" {
+  default = 1
+}
