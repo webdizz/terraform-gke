@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkinsci/jenkins:2.154-alpine
+    ports:
+     - 8080:8080
+    volumes:
+     - ./jenkins.war:/usr/share/jenkins/jenkins.war
