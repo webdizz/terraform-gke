@@ -1,5 +1,6 @@
 module "gke" {
-  source = "./gke"
+  source              = "./gke"
+  external-white-cidr = "${var.external-white-cidr}"
 }
 
 module "k8s" {
@@ -11,3 +12,5 @@ module "k8s" {
   username               = "${module.gke.master_admin_username}"
   password               = "${module.gke.master_admin_password}"
 }
+
+variable "external-white-cidr" {}
