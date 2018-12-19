@@ -1,9 +1,9 @@
 resource "google_container_node_pool" "ci-mid-node-pool" {
   provider           = "google-beta"
-  name               = "ci-mid-node-pool"
+  name               = "ci-mid-node${var.sfx}-pool"
   zone               = "${var.region}-a"
   cluster            = "${google_container_cluster.gke-cluster.name}"
-  initial_node_count = "${var.ci-mid-max-nodes}"
+  initial_node_count = 1
 
   autoscaling {
     min_node_count = 0

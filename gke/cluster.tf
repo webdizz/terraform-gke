@@ -1,6 +1,6 @@
 resource "google_container_cluster" "gke-cluster" {
   provider = "google-beta"
-  name     = "${var.cluster_name}"
+  name     = "${var.cluster_name}${var.sfx}"
 
   network    = "${google_compute_network.default.name}"
   subnetwork = "${google_compute_subnetwork.default.name}"
@@ -11,7 +11,7 @@ resource "google_container_cluster" "gke-cluster" {
 
   node_pool {
     name               = "default-pool"
-    initial_node_count = "${var.k8s-max-nodes}"
+    initial_node_count = 1
 
     autoscaling {
       min_node_count = 0

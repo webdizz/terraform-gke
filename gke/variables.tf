@@ -7,7 +7,7 @@ variable "zone" {
 }
 
 variable "network_name" {
-  default = "gke-k8s-cicd-net"
+  default = "gke-k8s-net"
 }
 
 variable "k8s-version" {
@@ -16,11 +16,6 @@ variable "k8s-version" {
 
 variable "external-white-cidr" {
   type = "list"
-
-  default = [{
-    display_name = "any"
-    cidr_block   = "1.2.1.2/32"
-  }]
 }
 
 variable "k8s-max-nodes" {
@@ -34,3 +29,4 @@ variable "ci-mid-max-nodes" {
 variable "cluster_name" {}
 
 variable "project_name" {}
+variable "sfx" {}

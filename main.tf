@@ -1,8 +1,9 @@
 module "gke" {
   source              = "./gke"
-  cluster_name        = "jenkins-gke-cluster"
+  cluster_name        = "gke-cluster"
   project_name        = "cicd-gke-jenkins-x"
   external-white-cidr = "${var.external-white-cidr}"
+  sfx                 = "${var.sfx}"
 }
 
 variable "external-white-cidr" {
@@ -22,4 +23,9 @@ module "k8s" {
   cluster_ca_certificate = "${module.gke.cluster_ca_certificate}"
   username               = "${module.gke.master_admin_username}"
   password               = "${module.gke.master_admin_password}"
+  sfx                    = "${var.sfx}"
+}
+
+variable "sfx" {
+  default = "-cicd"
 }
