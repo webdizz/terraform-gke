@@ -1,2 +1,4 @@
 .terraform/
-_private_vars.tfvars
+terraform.tfvars
+gke/terraform-sa.json
+jnlp/cacerts
