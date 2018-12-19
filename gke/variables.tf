@@ -15,7 +15,12 @@ variable "k8s-version" {
 }
 
 variable "external-white-cidr" {
-  default = "1.2.3.4/32"
+  type = "list"
+
+  default = [{
+    display_name = "any"
+    cidr_block   = "1.2.1.2/32"
+  }]
 }
 
 variable "k8s-max-nodes" {
@@ -25,3 +30,7 @@ variable "k8s-max-nodes" {
 variable "ci-mid-max-nodes" {
   default = 1
 }
+
+variable "cluster_name" {}
+
+variable "project_name" {}

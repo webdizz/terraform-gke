@@ -1,7 +1,7 @@
 provider "google-beta" {
   version     = "~> 1.20"
   credentials = "${file("${path.module}/terraform-sa.json")}"
-  project     = "cicd-gke-jenkins-x"
+  project     = "${var.project_name}"
   region      = "${var.region}"
 }
 

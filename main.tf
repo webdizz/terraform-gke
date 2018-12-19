@@ -1,6 +1,17 @@
 module "gke" {
   source              = "./gke"
+  cluster_name        = "jenkins-gke-cluster"
+  project_name        = "cicd-gke-jenkins-x"
   external-white-cidr = "${var.external-white-cidr}"
+}
+
+variable "external-white-cidr" {
+  type = "list"
+
+  default = [{
+    display_name = "any"
+    cidr_block   = "1.2.1.2/32"
+  }]
 }
 
 module "k8s" {
@@ -12,5 +23,3 @@ module "k8s" {
   username               = "${module.gke.master_admin_username}"
   password               = "${module.gke.master_admin_password}"
 }
-
-variable "external-white-cidr" {}
