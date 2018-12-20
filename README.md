@@ -13,7 +13,7 @@
 
 ```kubectl create clusterrolebinding $CURRENT_SERVICE_ACCOUNT-user-cluster-admin-binding --clusterrole=cluster-admin --user=$CURRENT_SERVICE_ACCOUNT```
 
-## Create dedicated role for `jenkins`
+## Create dedicated role for `jenkins` along with PodSecurityPolicy
 ```kubectl -n ci-cd  apply -f jenkins/role.yml```
 
 ## Obtain `jenkins` service account token for authentication from Jenkins master
