@@ -1,0 +1,36 @@
+def label = "build-pod-k8s-plugin-${UUID.randomUUID().toString()}"
+podTemplate(
+    label: label, 
+    containers: [
+        containerTemplate(
+            name: 'jnlp', 
+            image: 'gcr.io/cicd-gke-jenkins-x/jenkins/jnlp:correct',
+            resourceRequestCpu: '0.2',
+            resourceLimitCpu: '0.3',
+            resourceRequestMemory: '500Mi',
+            resourceLimitMemory: '800Mi',
+            ),
+        containerTemplate(
+            name: 'maven', 
+            image: 'gcr.io/cicd-gke-jenkins-x/kubernetes-plugin/mvn-deps:v2', 
+            resourceRequestCpu: '2',
+            resourceLimitCpu: '2.5',
+            resourceRequestMemory: '1500Mi',
+            resourceLimitMemory: '2Gi',
+            command: 'cat',
+            ttyEnabled: true
+            ),
+      ],
+    nodeSelector: 'dedicated=ci-mid'
+  ) {
+    node(label) {
+        stage('Get a kubernetes-plugin project') {
+            git 'https://github.com/jenkinsci/kubernetes-plugin.git'
+            container('maven') {
+                stage('Build a kubernetes-plugin project') {
+                    sh 'mvn -Dmaven.repo.local="/repo" -B install'
+                }
+            }
+        }
+    }
+}
