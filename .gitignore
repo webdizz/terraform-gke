@@ -3,3 +3,4 @@ terraform.tfvars
 gke/terraform-sa.json
 jnlp/cacerts
 terraform.tfstate*
+.DS_Store
